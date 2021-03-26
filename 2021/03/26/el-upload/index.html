@@ -1,12 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>el-upload | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="element-ui的文件上传限制文件类型和大小1.给el-upload组件定义好beforeUpload，beforeRemove方法。123456789101112131415161718&lt;el-upload  ref&#x3D;&quot;upload&quot;  :on-preview&#x3D;&quot;handlePreview&quot;  :on-remove&#x3D;&quot;handleRem">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mstcyj.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="element-ui的文件上传限制文件类型和大小1.给el-upload组件定义好beforeUpload，beforeRemove方法。123456789101112131415161718&lt;el-upload  ref&#x3D;&quot;upload&quot;  :on-preview&#x3D;&quot;handlePreview&quot;  :on-remove&#x3D;&quot;handleRem">
 <meta property="og:type" content="article">
 <meta property="og:title" content="el-upload">
 <meta property="og:url" content="https://mstcyj.github.io/2021/03/26/el-upload/index.html">
@@ -17,196 +34,302 @@
 <meta property="article:modified_time" content="2021-03-26T11:24:55.667Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+<link rel="canonical" href="https://mstcyj.github.io/2021/03/26/el-upload/">
 
-  
-<meta name="generator" content="Hexo 5.4.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>el-upload | Hexo</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://mstcyj.github.io"></form>
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#element-ui%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E9%99%90%E5%88%B6%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.</span> <span class="nav-text">element-ui的文件上传限制文件类型和大小</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BB%99el-upload%E7%BB%84%E4%BB%B6%E5%AE%9A%E4%B9%89%E5%A5%BDbeforeUpload%EF%BC%8CbeforeRemove%E6%96%B9%E6%B3%95%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">1.给el-upload组件定义好beforeUpload，beforeRemove方法。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%A6%96%E5%85%88%E8%A6%81%E5%AE%9A%E4%B9%89before-upload-%E6%96%B9%E6%B3%95%E3%80%82%E6%88%91%E8%BF%99%E9%87%8C%E9%99%90%E5%88%B6%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%B8%8D%E8%83%BD%E6%98%AFexe-iso%E3%80%82%E9%99%90%E5%88%B6%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F5M%E3%80%82"><span class="nav-number">1.2.</span> <span class="nav-text">2.首先要定义before-upload 方法。我这里限制文件类型不能是exe,iso。限制文件大小5M。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8F%AA%E5%81%9A%E8%BF%99%E4%BA%9B%E8%BF%98%E4%B8%8D%E5%A4%9F%EF%BC%8C%E4%B8%8D%E7%AC%A6%E5%90%88%E8%A7%84%E5%88%99%E7%9A%84%E6%96%87%E4%BB%B6%E8%BF%98%E6%98%AF%E4%BC%9A%E5%87%BA%E7%8E%B0%E5%9C%A8%E9%A2%84%E8%A7%88%E6%96%87%E4%BB%B6%E5%88%97%E8%A1%A8%E9%87%8C%E3%80%82%E4%B8%94el-upload%E7%BB%84%E4%BB%B6%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%BC%B9%E5%87%BA%E5%88%A0%E9%99%A4%E7%A1%AE%E8%AE%A4%E6%8C%89%E9%92%AE%E3%80%82%E4%BD%93%E9%AA%8C%E9%9D%9E%E5%B8%B8%E4%B8%8D%E5%A5%BD%E3%80%82%E5%9B%A0%E6%AD%A4%E8%BF%98%E9%9C%80%E8%A6%81%E5%9C%A8before-remove%E6%96%B9%E6%B3%95%E4%B8%AD%E5%81%9A%E4%B8%80%E4%BA%9B%E5%A4%84%E7%90%86%E3%80%82"><span class="nav-number">1.3.</span> <span class="nav-text">3.只做这些还不够，不符合规则的文件还是会出现在预览文件列表里。且el-upload组件会自动弹出删除确认按钮。体验非常不好。因此还需要在before-remove方法中做一些处理。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%A6%82%E6%9C%89%E9%97%AE%E9%A2%98%E6%AC%A2%E8%BF%8E%E7%95%99%E8%A8%80%E4%BA%A4%E6%B5%81%E3%80%82"><span class="nav-number">1.4.</span> <span class="nav-text">4.如有问题欢迎留言交流。</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </aside>
+  <div class="sidebar-dimmer"></div>
 
-      <div class="outer">
-        <section id="main"><article id="post-el-upload" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/03/26/el-upload/" class="article-date">
-  <time class="dt-published" datetime="2021-03-26T11:04:07.000Z" itemprop="datePublished">2021-03-26</time>
-</a>
+
+    </header>
+
     
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
   </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      el-upload
-    </h1>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
   
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mstcyj.github.io/2021/03/26/el-upload/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          el-upload
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
       
+
+      <time title="Created: 2021-03-26 19:04:07 / Modified: 19:24:55" itemprop="dateCreated datePublished" datetime="2021-03-26T19:04:07+08:00">2021-03-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
         <h2 id="element-ui的文件上传限制文件类型和大小"><a href="#element-ui的文件上传限制文件类型和大小" class="headerlink" title="element-ui的文件上传限制文件类型和大小"></a>element-ui的文件上传限制文件类型和大小</h2><h3 id="1-给el-upload组件定义好beforeUpload，beforeRemove方法。"><a href="#1-给el-upload组件定义好beforeUpload，beforeRemove方法。" class="headerlink" title="1.给el-upload组件定义好beforeUpload，beforeRemove方法。"></a>1.给el-upload组件定义好beforeUpload，beforeRemove方法。</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-upload</span><br><span class="line">  ref=<span class="string">&quot;upload&quot;</span></span><br><span class="line">  :on-preview=<span class="string">&quot;handlePreview&quot;</span></span><br><span class="line">  :on-remove=<span class="string">&quot;handleRemove&quot;</span></span><br><span class="line">  :before-remove=<span class="string">&quot;beforeRemove&quot;</span></span><br><span class="line">  :limit=<span class="string">&quot;3&quot;</span></span><br><span class="line">  :on-change=<span class="string">&quot;handleChange&quot;</span></span><br><span class="line">  :on-exceed=<span class="string">&quot;handleExceed&quot;</span></span><br><span class="line">  :auto-upload=<span class="string">&quot;false&quot;</span></span><br><span class="line">  :show-file-list=<span class="string">&quot;true&quot;</span></span><br><span class="line">  :before-upload=<span class="string">&quot;beforeUpload&quot;</span></span><br><span class="line">  :http-request=<span class="string">&quot;UploadFile&quot;</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;upload-demo&quot;</span></span><br><span class="line">  action=<span class="string">&quot;string&quot;</span></span><br><span class="line">&gt;</span><br><span class="line">  &lt;el-button size=<span class="string">&quot;small&quot;</span> type=<span class="string">&quot;primary&quot;</span>&gt;点击上传&lt;/el-button&gt;</span><br><span class="line">&lt;/el-upload&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="2-首先要定义before-upload-方法。我这里限制文件类型不能是exe-iso。限制文件大小5M。"><a href="#2-首先要定义before-upload-方法。我这里限制文件类型不能是exe-iso。限制文件大小5M。" class="headerlink" title="2.首先要定义before-upload 方法。我这里限制文件类型不能是exe,iso。限制文件大小5M。"></a>2.首先要定义before-upload 方法。我这里限制文件类型不能是exe,iso。限制文件大小5M。</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">beforeUpload</span>(<span class="params">file</span>)</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;文件：&#x27;</span>, file)</span><br><span class="line">  <span class="keyword">var</span> FileExt = file.name.replace(<span class="regexp">/.+\./</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">  <span class="keyword">const</span> isLt5M = file.size / <span class="number">1024</span> / <span class="number">1024</span> &lt; <span class="number">5</span></span><br><span class="line">  <span class="keyword">var</span> extension = [<span class="string">&#x27;exe&#x27;</span>, <span class="string">&#x27;iso&#x27;</span>].indexOf(FileExt.toLowerCase()) === -<span class="number">1</span></span><br><span class="line">  <span class="keyword">if</span> (!extension)&#123;  </span><br><span class="line">    <span class="built_in">this</span>.$message(&#123;</span><br><span class="line">        type: <span class="string">&#x27;warning&#x27;</span>,</span><br><span class="line">        message: <span class="string">&#x27;禁止上传 exe, iso 文件！&#x27;</span></span><br><span class="line">     &#125;)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!isLt5M) &#123;</span><br><span class="line">    <span class="built_in">this</span>.$message(&#123;</span><br><span class="line">        type: <span class="string">&#x27;warning&#x27;</span>,</span><br><span class="line">        message: <span class="string">&#x27;附件大小超限，文件不能超过 5M&#x27;</span></span><br><span class="line">     &#125;)       </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <h3 id="3-只做这些还不够，不符合规则的文件还是会出现在预览文件列表里。且el-upload组件会自动弹出删除确认按钮。体验非常不好。因此还需要在before-remove方法中做一些处理。"><a href="#3-只做这些还不够，不符合规则的文件还是会出现在预览文件列表里。且el-upload组件会自动弹出删除确认按钮。体验非常不好。因此还需要在before-remove方法中做一些处理。" class="headerlink" title="3.只做这些还不够，不符合规则的文件还是会出现在预览文件列表里。且el-upload组件会自动弹出删除确认按钮。体验非常不好。因此还需要在before-remove方法中做一些处理。"></a>3.只做这些还不够，不符合规则的文件还是会出现在预览文件列表里。且el-upload组件会自动弹出删除确认按钮。体验非常不好。因此还需要在before-remove方法中做一些处理。</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">beforeRemove</span>(<span class="params">file, fileList</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> FileExt = file.name.replace(<span class="regexp">/.+\./</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">  <span class="keyword">var</span> isLt5M = file.size / <span class="number">1024</span> / <span class="number">1024</span> &lt; <span class="number">5</span></span><br><span class="line">  <span class="keyword">var</span> extension = [<span class="string">&#x27;exe&#x27;</span>, <span class="string">&#x27;iso&#x27;</span>].indexOf(FileExt.toLowerCase()) === -<span class="number">1</span></span><br><span class="line">  <span class="keyword">if</span> (!extension || !isLt5M) &#123;</span><br><span class="line">    <span class="keyword">var</span> i = fileList.indexOf(file)</span><br><span class="line">    fileList.splice(i, <span class="number">1</span>) <span class="comment">// 自动删除不符合要求的文件，不让它出现在预览列表中</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span> <span class="comment">// 只有return false 才会真的限制</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.$confirm(<span class="string">`确定移除 <span class="subst">$&#123;file.name&#125;</span>？`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <h3 id="4-如有问题欢迎留言交流。"><a href="#4-如有问题欢迎留言交流。" class="headerlink" title="4.如有问题欢迎留言交流。"></a>4.如有问题欢迎留言交流。</h3>
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="https://mstcyj.github.io/2021/03/26/el-upload/" data-id="ckmq8xyn40000lwpthaeq38qy" data-title="el-upload" class="article-share-link">Share</a>
-      
-      
-      
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/26/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2021/03/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2021/03/26/el-upload/">el-upload</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/26/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2021 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
 
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-
-
+  </footer>
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
 
 
 
 
-<script src="/js/script.js"></script>
+
+
+  
 
 
 
 
 
-  </div>
 </body>
 </html>
